@@ -787,7 +787,44 @@ function initEasterEggs() {
   name.addEventListener('touchmove', endPress, { passive: true });
   name.addEventListener('mousedown', startPress);
   name.addEventListener('mouseup', endPress);
+const revealHiddenMessage = () => {
+  const message = document.createElement('div');
 
+  message.style.cssText = `
+    position: fixed;
+    inset: 0;
+    z-index: 2000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    background: rgba(10, 5, 20, 0.94);
+    color: white;
+    text-align: center;
+    font-family: inherit;
+  `;
+
+  message.innerHTML = `
+    <div style="max-width:500px;">
+      <div style="font-size:45px;">❤️</div>
+      <h2>One more thing...</h2>
+      <p style="font-size:17px; line-height:1.8;">
+        If you're seeing this, you actually shook your phone 😂❤️
+        <br><br>
+        You are one of the greatest gifts God has ever given me,
+        and I'm endlessly grateful that you were born.
+        The world is better because you're in it,
+        and my world is better because I get to know you. ❤️
+      </p>
+      <button onclick="this.parentElement.parentElement.parentElement.remove()"
+        style="padding:12px 24px;border:0;border-radius:20px;">
+        ❤️ Close
+      </button>
+    </div>
+  `;
+
+  document.body.appendChild(message);
+};
   if (window.DeviceMotionEvent) {
     let lastShake = 0;
     window.addEventListener('devicemotion', e => {
@@ -796,7 +833,7 @@ function initEasterEggs() {
       const total = Math.abs(a.x || 0) + Math.abs(a.y || 0) + Math.abs(a.z || 0);
       if (total > 45 && Date.now() - lastShake > 3000) {
         lastShake = Date.now();
-        spawnConfetti(50);
+        revealHiddenMessage();
       }
     }, { passive: true });
   }
