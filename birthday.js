@@ -40,14 +40,14 @@ const CONFIG = {
   "May God bless you, protect you, and fill your life with the same happiness and love that you've given to the people around you. And may you always remember that your existence is a blessing — not only to me, but to everyone lucky enough to know you. 🌹"
   ],
   balloonWishes: [
-    "Luôn xinh đẹp! 💕",
-    "Mãi hạnh phúc! 🌟",
-    "Sức khỏe dồi dào! 💪",
-    "Tràn đầy niềm vui! 🎉",
-    "Yêu thương bất tận! 💛",
-    "May mắn luôn đến! 🍀",
-    "Ước mơ thành thật! ✨",
-    "Mỗi ngày tuyệt vời! 🌸"
+    "Happy birthday, beautiful! ❤️",
+  "May God bless you always. 🙏❤️",
+  "You deserve all the happiness in the world. 🌹",
+  "I'm so glad you were born. 🥹❤️",
+  "Keep smiling, always. 🌸",
+  "You are truly a gift from God. 🎁❤️",
+  "May all your dreams come true. ✨",
+  "I hope this year brings you endless happiness. 💕"
   ]
 };
 
