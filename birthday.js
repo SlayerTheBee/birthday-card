@@ -539,6 +539,7 @@ function initSakura() {
 
 // ============ AUDIO (Web Audio Birthday Melody) ============
 
+
 function initAudio() {
   const btn = $('#musicBtn');
   const audio = new Audio('apocalypse-cigarettes-after-sex_HcD9qYWw.mp3');
@@ -546,27 +547,45 @@ function initAudio() {
   audio.loop = true;
   audio.volume = 0.75;
 
+  let musicEnabled = true;
+
   function updateMusicButton() {
     state.musicPlaying = !audio.paused;
     btn.classList.toggle('playing', !audio.paused);
     btn.querySelector('span').textContent = audio.paused ? '🎵' : '🔊';
   }
 
-  // Try to start the music automatically
-  audio.play()
-    .then(updateMusicButton)
-    .catch(() => {
-      // The browser may require the visitor to tap first
-      updateMusicButton();
-    });
+  function startMusic() {
+    if (!musicEnabled || !audio.paused) return;
 
-  // Keep the music button working
+    audio.play()
+      .then(updateMusicButton)
+      .catch(updateMusicButton);
+  }
+
+  // Try autoplay when the page loads
+  startMusic();
+
+  // If autoplay is blocked, start after the visitor's first interaction
+  function firstInteraction() {
+    startMusic();
+
+    if (!audio.paused) {
+      document.removeEventListener('pointerdown', firstInteraction);
+      document.removeEventListener('keydown', firstInteraction);
+    }
+  }
+
+  document.addEventListener('pointerdown', firstInteraction);
+  document.addEventListener('keydown', firstInteraction);
+
+  // Let visitors turn the music off or back on
   btn.addEventListener('click', () => {
     if (audio.paused) {
-      audio.play()
-        .then(updateMusicButton)
-        .catch(() => {});
+      musicEnabled = true;
+      startMusic();
     } else {
+      musicEnabled = false;
       audio.pause();
       updateMusicButton();
     }
@@ -575,7 +594,6 @@ function initAudio() {
   audio.addEventListener('play', updateMusicButton);
   audio.addEventListener('pause', updateMusicButton);
 }
-
 
 // ============ SCROLL FADE-IN ============
 function initScrollAnimations() {
