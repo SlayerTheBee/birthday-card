@@ -540,7 +540,7 @@ function initSakura() {
 // ============ AUDIO (Web Audio Birthday Melody) ============
 function initAudio() {
   const btn = $('#musicBtn');
-  const audio = new Audio('Lost_Panda_Stuck_with_U_Theos.mp3');
+  const audio = new Audio('apocalypse-cigarettes-after-sex_HcD9qYWw.mp3');
 
   audio.loop = true;
   audio.volume = 0.75;
