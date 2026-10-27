@@ -538,6 +538,7 @@ function initSakura() {
 }
 
 // ============ AUDIO (Web Audio Birthday Melody) ============
+
 function initAudio() {
   const btn = $('#musicBtn');
   const audio = new Audio('apocalypse-cigarettes-after-sex_HcD9qYWw.mp3');
@@ -545,20 +546,36 @@ function initAudio() {
   audio.loop = true;
   audio.volume = 0.75;
 
+  function updateMusicButton() {
+    state.musicPlaying = !audio.paused;
+    btn.classList.toggle('playing', !audio.paused);
+    btn.querySelector('span').textContent = audio.paused ? '🎵' : '🔊';
+  }
+
+  // Try to start the music automatically
+  audio.play()
+    .then(updateMusicButton)
+    .catch(() => {
+      // The browser may require the visitor to tap first
+      updateMusicButton();
+    });
+
+  // Keep the music button working
   btn.addEventListener('click', () => {
     if (audio.paused) {
-      audio.play();
-      state.musicPlaying = true;
-      btn.classList.add('playing');
-      btn.querySelector('span').textContent = '🔊';
+      audio.play()
+        .then(updateMusicButton)
+        .catch(() => {});
     } else {
       audio.pause();
-      state.musicPlaying = false;
-      btn.classList.remove('playing');
-      btn.querySelector('span').textContent = '🎵';
+      updateMusicButton();
     }
   });
+
+  audio.addEventListener('play', updateMusicButton);
+  audio.addEventListener('pause', updateMusicButton);
 }
+
 
 // ============ SCROLL FADE-IN ============
 function initScrollAnimations() {
