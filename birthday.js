@@ -366,9 +366,9 @@ async function typeLetter() {
     for (const char of line) {
       cursor.before(document.createTextNode(char));
       playTypeSound();
-      let d = 35 + Math.random() * 30;
-      if (',.:'.includes(char)) d = 180 + Math.random() * 80;
-      if (char === '—') d = 120;
+      let d = 15 + Math.random() * 10;
+      if (',.:'.includes(char)) d = 70 + Math.random() * 30;
+      if (char === '—') d = 50;
       await wait(d);
     }
     cursor.before(document.createElement('br'));
