@@ -412,12 +412,55 @@ body {
     animation: none;
   }
 }
+/* Falling rose petals */
+#rosePetals {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.rose-petal {
+  position: absolute;
+  top: -50px;
+  color: #c9184a;
+  opacity: 0;
+  font-size: 22px;
+  animation: petalFall linear infinite;
+  filter: drop-shadow(0 0 6px rgba(255, 60, 100, 0.35));
+}
+
+@keyframes petalFall {
+  0% {
+    transform: translate3d(0, -30px, 0) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.8;
+  }
+  90% {
+    opacity: 0.7;
+  }
+  100% {
+    transform: translate3d(80px, 110vh, 0) rotate(540deg);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rose-petal {
+    animation: none;
+    display: none;
+  }
+}
 </style>
 </head>
 <body>
 <canvas id="bgCanvas"></canvas>
 <div id="floatingHearts"></div>
 <div id="confettiContainer"></div>
+<div id="rosePetals" aria-hidden="true"></div>
 <button id="musicBtn" aria-label="Bật/tắt nhạc"><span>🎵</span></button>
 
 <!-- ENVELOPE -->
@@ -555,6 +598,25 @@ body {
       lightbox.classList.add('open');
     });
   });
+</script>
+<script>
+(() => {
+  const container = document.getElementById('rosePetals');
+  if (!container) return;
+
+  const petals = ['🌹', '🌸', '🥀'];
+
+  for (let i = 0; i < 14; i++) {
+    const petal = document.createElement('span');
+    petal.className = 'rose-petal';
+    petal.textContent = petals[Math.floor(Math.random() * petals.length)];
+    petal.style.left = Math.random() * 100 + '%';
+    petal.style.animationDuration = (12 + Math.random() * 12) + 's';
+    petal.style.animationDelay = (-Math.random() * 24) + 's';
+    petal.style.fontSize = (14 + Math.random() * 12) + 'px';
+    container.appendChild(petal);
+  }
+})();
 </script>
 <script src="birthday.js"></script>
 </body>
