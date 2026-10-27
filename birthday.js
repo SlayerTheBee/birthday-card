@@ -567,14 +567,16 @@ function initAudio() {
   startMusic();
 
   // If autoplay is blocked, start after the visitor's first interaction
-  function firstInteraction() {
-    startMusic();
-
-    if (!audio.paused) {
-      document.removeEventListener('pointerdown', firstInteraction);
-      document.removeEventListener('keydown', firstInteraction);
-    }
+function firstInteraction() {
+  if (musicEnabled && audio.paused) {
+    audio.play()
+      .then(updateMusicButton)
+      .catch(updateMusicButton);
   }
+
+  document.removeEventListener('pointerdown', firstInteraction);
+  document.removeEventListener('keydown', firstInteraction);
+}
 
   document.addEventListener('pointerdown', firstInteraction);
   document.addEventListener('keydown', firstInteraction);
